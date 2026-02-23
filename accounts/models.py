@@ -202,14 +202,21 @@ class CareerMen(models.Model):
 
 
 
-
-from django.db import models
-
 class Storyrole(models.Model):
     name = models.CharField(max_length=100)
     role = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='success_story/')
-    video = models.FileField(upload_to='success_stories_videos/', blank=True, null=True)  # optional video
 
     def __str__(self):
         return self.name
+
+
+class StoryImage(models.Model):
+    story = models.ForeignKey(
+        Storyrole,
+        related_name='images',
+        on_delete=models.CASCADE
+    )
+    image = models.ImageField(upload_to='success_story/')
+
+    def __str__(self):
+        return f"{self.story.name} Image"

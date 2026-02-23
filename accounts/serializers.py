@@ -163,11 +163,19 @@ class CareerMenSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'image']     
 
 
-
 from rest_framework import serializers
-from .models import Storyrole
+from .models import Storyrole, StoryImage
+
+
+class StoryImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StoryImage
+        fields = ['image']
+
 
 class StoryroleSerializer(serializers.ModelSerializer):
+    images = StoryImageSerializer(many=True, read_only=True)
+
     class Meta:
-        model = SuccessStory
-        fields = '__all__'
+        model = Storyrole
+        fields = ['id', 'name', 'role', 'images']

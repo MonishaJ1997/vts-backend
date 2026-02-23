@@ -134,10 +134,21 @@ class CareerMenAdmin(admin.ModelAdmin):
     list_display = ('name', 'image')
 
 
-
 from django.contrib import admin
-from .models import Storyrole
+from .models import Storyrole, StoryImage
+
+
+class StoryImageInline(admin.TabularInline):
+    model = StoryImage
+    extra = 3   # show 3 upload fields
+
 
 @admin.register(Storyrole)
 class StoryroleAdmin(admin.ModelAdmin):
-    list_display = ('name', 'role')
+    list_display = ['name', 'role']
+    inlines = [StoryImageInline]
+
+
+@admin.register(StoryImage)
+class StoryImageAdmin(admin.ModelAdmin):
+    list_display = ['story']
